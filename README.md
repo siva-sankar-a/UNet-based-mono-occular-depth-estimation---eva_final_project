@@ -1,2 +1,2 @@
-# eva_final_project
+# EVA Final Project
 EVA4 final project repository
