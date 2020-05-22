@@ -168,7 +168,7 @@ class DataManager(object):
                 if train_transforms:
                     self.train_transforms = train_transforms
                 else:
-                    self.train_transforms = train_transforms = Compose([Lambda(image=DataManager.padded_random_crop, always_apply=False, p=0.5),
+                    self.train_transforms = Compose([Lambda(image=DataManager.padded_random_crop, always_apply=False, p=0.5),
                                                                         Cutout(
                         num_holes=4, max_h_size=8, max_w_size=8, always_apply=False, p=0.5),
                         HorizontalFlip(
