@@ -57,7 +57,7 @@ class TestExtended(Test):
         self.test_loader = test_loader
         self.writer = writer
     
-    def step(self, epoch, regularization=None, weight_decay=0.01):
+    def step(self, epoch):
         self.model.eval()
         self.dataset.set_eval()
         pbar = tqdm(self.test_loader)

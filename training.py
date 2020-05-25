@@ -86,7 +86,7 @@ class TrainExtended(Train):
         self.scheduler = scheduler
         self.writer = writer
     
-    def step(self, epoch, regularization=None, weight_decay=0.01):
+    def step(self, epoch):
         self.model.train()
         self.dataset.set_train()
         train_loss = 0
