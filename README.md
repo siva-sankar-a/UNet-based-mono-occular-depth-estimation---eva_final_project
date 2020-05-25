@@ -96,6 +96,9 @@ Estimated Total Size (MB): 1583.05
 ----------------------------------------------------------------
 ```
 
+#### Architeture
+![Dot diagram](/img/eva_final_project.svg)
+
 ## Training
 There was a total of 400K images in the dataset for BG, FG-BG, depth and mask. A subset of 40,000 images was taken from this dataset for training. 75% of this dataset was used for training and the remaining 25% for testing.
 - Size of image in the actual dataset: 1024x1024
