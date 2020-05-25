@@ -78,7 +78,7 @@ class Train(object):
 class TrainExtended(Train):
 
     def __init__(self, model, device, train_loader, optimizer, writer, scheduler=None):
-        super().__init__()
+        super().__init__(model, device, train_loader, optimizer, writer, scheduler)
         self.model = model
         self.device = device
         self.train_loader = train_loader

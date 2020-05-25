@@ -51,7 +51,7 @@ class Test(object):
 class TestExtended(Test):
 
     def __init__(self, model, device, test_loader, writer):
-        super().__init__()
+        super().__init__(model, device, test_loader, writer)
         self.model = model
         self.device = device
         self.test_loader = test_loader
