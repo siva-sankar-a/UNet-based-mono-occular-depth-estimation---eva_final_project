@@ -17,7 +17,7 @@ import tensorflow as tf
 # Matplotlib import
 import matplotlib.pyplot as plt
 
-from .models.model_s12 import Net
+from .models.model_s15 import Net
 # from .data_manager.data_manager_pytorch import DataManager
 from .data_manager.data_manager_albumentations import DataManager
 from .training import Train, TrainExtended
