@@ -160,7 +160,6 @@ class TrainExtended(Train):
                                     f'loss: {train_loss:.5f} cm_loss={cm_loss:.5f} d_loss={d_loss:.5f}')
 
             self.writer.add_scalar('train/batch_loss', batch_loss, epoch * train_len + batch_idx)
-            break
         self.writer.add_scalar('loss', train_loss, epoch)
 
         return train_loss, np.mean([acc1, acc2])

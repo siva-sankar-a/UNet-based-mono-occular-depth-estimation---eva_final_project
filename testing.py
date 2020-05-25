@@ -115,6 +115,5 @@ class TestExtended(Test):
                                     f'loss: {test_loss:.5f} cm_loss={cm_loss:.5f} d_loss={d_loss:.5f}')
 
             self.writer.add_scalar('test/batch_loss', batch_loss, epoch * test_len + batch_idx)
-            break
         self.writer.add_scalar('loss', test_loss, epoch)
         return test_loss, np.mean([acc1, acc2])
