@@ -169,3 +169,12 @@ TEST : epoch=4 dssim: 0.25268 mask_acc: 98.89 depth_acc: 74.97 loss: 25.44591 cm
 
 #### Output predicted depth map
 ![Result4](img/result_4.png)
+
+## References
+
+- [AWS S3](https://boto3.amazonaws.com/v1/documentation/api/latest/guide/s3-uploading-files.html)
+- [SSIM Loss Intution](https://github.com/Po-Hsun-Su/pytorch-ssim)
+- [SSIM Loss Pytorch Implementation](https://torchgeometry.readthedocs.io/en/latest/losses.html#kornia.losses.ssim)
+- [UNet architecture](https://arxiv.org/pdf/1505.04597.pdf)
+- [Dense Depth](https://github.com/ialhashim/DenseDepth)
+- [Mask RCNN(Loss and Pytorch Implementation)](https://github.com/wkentaro/mask-rcnn.pytorch)
