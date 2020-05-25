@@ -94,7 +94,7 @@ class Experiment(object):
 
         lr = 1e-3
 
-        optimizer = optim.Adam(model.parameters(), lr=lr, amsgrad=True)
+        optimizer = optim.Adam(self.model.parameters(), lr=lr, amsgrad=True)
 
         # scheduler = StepLR(optimizer, step_size=15, gamma=0.1)
         # scheduler = ReduceLROnPlateau(optimizer, mode='min', patience=5)
