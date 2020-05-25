@@ -83,6 +83,19 @@ The inspiration for the data model was U-NET, a Convolutional Neural Network arc
 #### Head
 The architecture comprises two heads - one for depth prediction and one for mask prediction. It consists of a single convolutional layer.
 
+#### No of parameters
+```
+Total params: 5,649,664
+Trainable params: 5,649,664
+Non-trainable params: 0
+----------------------------------------------------------------
+Input size (MB): 6.00
+Forward/backward pass size (MB): 1555.50
+Params size (MB): 21.55
+Estimated Total Size (MB): 1583.05
+----------------------------------------------------------------
+```
+
 ## Training
 There was a total of 400K images in the dataset for BG, FG-BG, depth and mask. A subset of 40,000 images was taken from this dataset for training. 75% of this dataset was used for training and the remaining 25% for testing.
 - Size of image in the actual dataset: 1024x1024
@@ -90,7 +103,7 @@ There was a total of 400K images in the dataset for BG, FG-BG, depth and mask. A
 - Number of channels for input image: 6 (3 each for BG and FG-BG)
 - Output image dimension: 128x128
 - Number of channels for output image: 2 (1 for Mask and 1 for Depth Map)
-- Adam optimizer was used along with a starting learning rate of 10^-3.
+- Adam optimizer was used along with a starting learning rate of <img src="https://latex.codecogs.com/gif.latex?10^{-3}" />.
 
 ### Loss Function
 A custom loss function was developed. It consists of two main components:
@@ -100,16 +113,29 @@ A custom loss function was developed. It consists of two main components:
 
 - Depth Loss: Combination of SSIM Loss and L1 Loss given by:
 
-<img src="https://latex.codecogs.com/gif.latex?Loss_{depth}=c_{depth\_map\_ssim}\times\;Loss_{SSIM}(depth_{predicted},depth_{actual})+c_{depth\_map\_L1}\times\;Loss_{L_1}(depth_{predicted},depth_{actual}) " />
+<img src="https://latex.codecogs.com/gif.latex?Loss_{depth}=c_{depth\_map\_ssim}\times\;Loss_{SSIM}(depth_{predicted},depth_{actual})\;+\;c_{depth\_map\_L1}\times\;Loss_{L_1}(depth_{predicted},depth_{actual}) " />
 
 - Total loss: Sum of Mask Loss and Depth Loss
 
 <img src="https://latex.codecogs.com/gif.latex?Loss_{total}=Loss_{mask}+Loss_{depth}" />
 
+- The constants were empherically found for training as follows
+
+| Constant | Value |
+| -- | -- | 
+| <img src="https://latex.codecogs.com/gif.latex?c_{mask\_loss}" /> | <img src="https://latex.codecogs.com/gif.latex?10^1" /> |
+| <img src="https://latex.codecogs.com/gif.latex?c_{depth\_map\_ssim}" /> | <img src="https://latex.codecogs.com/gif.latex?10^2" /> |
+| <img src="https://latex.codecogs.com/gif.latex?c_{depth\_map\_L1}" /> | <img src="https://latex.codecogs.com/gif.latex?10^{-1}" /> |
+
+
 ### Accuracy
 Two accuracies are computed for evaluating the model:
 - Mask Accuracy: Computed as the average number of correct pixels predicted against the target mask.
 - Depth Accuracy: Computed as SSIM between the predicted and target mask.
+
+## Results
+
+The last 
 
 ![Result1](img/result_1.png)
 ![Result2](img/result_2.png)
