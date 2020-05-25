@@ -96,14 +96,15 @@ There was a total of 400K images in the dataset for BG, FG-BG, depth and mask. A
 A custom loss function was developed. It consists of two main components:
 - Mask Loss: Binary Cross Entropy Loss
 
-<img src="https://latex.codecogs.com/gif.latex?Mask\_Loss=c_{mask\_loss}\times\;BCELoss(mask_{predicted},mask_{actual})" />
+<img src="https://latex.codecogs.com/gif.latex?Loss_{mask}=c_{mask\_loss}\times\;Loss_{BCE}(mask_{predicted},mask_{actual})" />
 
 - Depth Loss: Combination of SSIM Loss and L1 Loss given by:
 
-<img src="https://latex.codecogs.com/gif.latex?Depth\_Loss=c_{depth\_map\_ssim}\times\;DSSIM(depth\_map_{predicted},depth\_map_{actual})+c_{depth\_map\_L1}\times\;L_1\_Loss(depth\_map_{predicted},depth\_map_{actual}) " />
+<img src="https://latex.codecogs.com/gif.latex?Loss_{depth}=c_{depth\_map\_ssim}\times\;Loss_{SSIM}(depth_{predicted},depth_{actual})+c_{depth\_map\_L1}\times\;Loss_{L_1}(depth_{predicted},depth_{actual}) " />
 
-- Total loss: 
+- Total loss: Sum of Mask Loss and Depth Loss
 
+<img src="https://latex.codecogs.com/gif.latex?Loss_{total}=Loss_{mask}+Loss_{depth}" />
 
 ### Accuracy
 Two accuracies are computed for evaluating the model:
