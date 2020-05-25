@@ -119,7 +119,7 @@ class TrainExtended(Train):
             target_depth_map = depth_minimal_images.to(self.device)
 
             # Forward pass
-            output_mask, output_depth_map = model(fg_bg_stacked)
+            output_mask, output_depth_map = self.model(fg_bg_stacked)
 
             # Loss computation
 
