@@ -20,12 +20,12 @@ import matplotlib.pyplot as plt
 from .models.model_s12 import Net
 # from .data_manager.data_manager_pytorch import DataManager
 from .data_manager.data_manager_albumentations import DataManager
-from .training import Train
-from .testing import Test
+from .training import Train, TrainExtended
+from .testing import Test, TestExtended
 
 from .lr_range_finder.lr_finder import LRFinder
 
-__assignment_name__ = 's12'
+__assignment_name__ = 'eva_final_project'
 
 class Experiment(object):
     """
@@ -126,18 +126,30 @@ class Experiment(object):
                                           base_momentum=base_momentum, 
                                           max_momentum=momentum, 
                                           div_factor=div_factor)
-        
-        self.train = Train(model=self.model, 
-                      optimizer=optimizer, 
-                      device=self.device, 
-                      train_loader=self.data_manager.train_loader, 
-                      writer=train_writer, 
-                      scheduler=scheduler)
+        if self.name == 'eva_final_project':
+            self.train = TrainExtended(model=self.model, 
+                        optimizer=optimizer, 
+                        device=self.device, 
+                        train_loader=self.data_manager.train_loader, 
+                        writer=train_writer, 
+                        scheduler=scheduler)
 
-        self.test = Test(model=self.model, 
-                    device=self.device, 
-                    test_loader=self.data_manager.test_loader, 
-                    writer=test_writer)
+            self.test = TestExtended(model=self.model, 
+                        device=self.device, 
+                        test_loader=self.data_manager.test_loader, 
+                        writer=test_writer)
+        else:
+            self.train = Train(model=self.model, 
+                        optimizer=optimizer, 
+                        device=self.device, 
+                        train_loader=self.data_manager.train_loader, 
+                        writer=train_writer, 
+                        scheduler=scheduler)
+
+            self.test = Test(model=self.model, 
+                        device=self.device, 
+                        test_loader=self.data_manager.test_loader, 
+                        writer=test_writer)
         
         for epoch in range(0, epochs):
             self.data_manager.set_train()

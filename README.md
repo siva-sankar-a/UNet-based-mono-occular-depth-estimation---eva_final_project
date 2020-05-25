@@ -3,7 +3,7 @@
 # EVA Final Project
 EVA4 final project repository
 
-# Problem statement 
+## Problem statement 
 The problem statement is to identify camels from a desert environment
 
 ## Dataset creation
@@ -39,7 +39,7 @@ Image size was increased to 1024 X 1024 to obtain better depth images
     - Images with different backgrounds were equalized for brightness with [Adaptive Histogram Equalization](https://docs.opencv.org/master/d5/daf/tutorial_py_histogram_equalization.html)
     - Foregrounds were randomly placed and sized between 320 X 320 and 640 X 640 resolution on the 1024 X 1024 background 
 
-# Dataset URLs
+## Dataset URLs
 
 The dataset consists of a total of 40000 fg-bg images, bg images, depth maps and masks.
 
@@ -59,7 +59,7 @@ It can be found in the below urls:
   - [Part 10](https://eva-final-project-dataset.s3-ap-southeast-2.amazonaws.com/dataset_9.zip)
 - [Dataset information file](https://eva-final-project-dataset.s3-ap-southeast-2.amazonaws.com/dataset_info.csv)
 
-# Dataset metrics
+## Dataset metrics
 
 | Image Type | Size |  No of channels |  Mean_R | Mean_G | Mean_B | Mean | Std_R | Std_G | Std_B | Std |
 | --- | --- | --- | --- | --- | --- |--- | --- | --- | --- | --- | 
@@ -68,8 +68,48 @@ It can be found in the below urls:
 | Depth Maps | 512 X 512 |1 | NA | NA | NA | 0.0903 |  NA | NA | NA | 0.2781 |
 | Masks | 1024 X 1024 | 1 | NA | NA | NA | 0.6289 | NA | NA | NA | 0.2238 |
 
-# Lessons learnt
+## Modelling
+### Data Augmentation
+The following data augmentations were performed:
+- Mean
+- Normalization
+- Adaptive Histogram Equalization (CLAHE)
 
+### Data Model
+#### Backbone
+The inspiration for the data model was U-NET, a Convolutional Neural Network architecture used in biomedical image segmentation.  This architecture was modified by removing the last upsampling layer, with 12 convolutional layers for downsampling and 8 convolutional layers for upsampling. 
+
+![Model Architecture](img/NN_transparent.png)
+#### Head
+The architecture comprises two heads - one for depth prediction and one for mask prediction. It consists of a single convolutional layer.
+
+## Training
+There was a total of 400K images in the dataset for BG, FG-BG, depth and mask. A subset of 40,000 images was taken from this dataset for training. 75% of this dataset was used for training and the remaining 25% for testing.
+- Size of image in the actual dataset: 1024x1024
+- Input image dimension after downsizing for training: 256x256
+- Number of channels for input image: 6 (3 each for BG and FG-BG)
+- Output image dimension: 128x128
+- Number of channels for output image: 2 (1 for Mask and 1 for Depth Map)
+- Adam optimizer was used along with a starting learning rate of 10^-3.
+
+### Loss Function
+A custom loss function was developed. It consists of two main components:
+- Mask Loss: Binary Cross Entropy Loss
+- Depth Loss: Combination of SSIM Loss and L1 Loss given by:
+
+<img src="https://latex.codecogs.com/gif.latex?c_depth_map_ssim \times  dssim_loss + c_depth_map_l1 \times depth_l1_loss " />
+
+### Accuracy
+Two accuracies are computed for evaluating the model:
+- Mask Accuracy: Computed as the average number of correct pixels predicted against the target mask.
+- Depth Accuracy: Computed as SSIM between the predicted and target mask.
+
+![Result1](img/result_1.png)
+![Result2](img/result_2.png)
+![Result3](img/result_3.png)
+![Result4](img/result_4.png)
+
+## Lessons learnt
 - Depth mapping not effective due to excessive shadows and occlusions in background
 - Reconsidering background image setup
 - Depth mapping prediction gives unsatisfactory results for small image of size 224, 224 
