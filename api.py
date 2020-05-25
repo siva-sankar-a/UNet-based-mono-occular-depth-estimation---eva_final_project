@@ -79,6 +79,57 @@ class Experiment(object):
         self.test = None
 
     
+    def run(self, epochs=5):
+        if hasattr(tqdm, '_instances'):
+            tqdm._instances.clear()
+        
+        now = datetime.datetime.now()
+        prefix = now.strftime('%m-%d-%y %H:%M:%S')
+
+        train_dir = f'{self.train_dir_suffix}_{prefix}'
+        test_dir = f'{self.test_dir_suffix}_{prefix}'
+
+        train_writer = SummaryWriter(train_dir)
+        test_writer = SummaryWriter(test_dir)
+
+        lr = 1e-3
+
+        optimizer = optim.Adam(model.parameters(), lr=lr, amsgrad=True)
+
+        # scheduler = StepLR(optimizer, step_size=15, gamma=0.1)
+        # scheduler = ReduceLROnPlateau(optimizer, mode='min', patience=5)
+        if self.name == 'eva_final_project':
+            self.train = TrainExtended(model=self.model, 
+                        optimizer=optimizer, 
+                        device=self.device, 
+                        train_loader=self.data_manager.train_loader, 
+                        writer=train_writer, 
+                        scheduler=None)
+
+            self.test = TestExtended(model=self.model, 
+                        device=self.device, 
+                        test_loader=self.data_manager.test_loader, 
+                        writer=test_writer)
+        else:
+            self.train = Train(model=self.model, 
+                        optimizer=optimizer, 
+                        device=self.device, 
+                        train_loader=self.data_manager.train_loader, 
+                        writer=train_writer, 
+                        scheduler=None)
+
+            self.test = Test(model=self.model, 
+                        device=self.device, 
+                        test_loader=self.data_manager.test_loader, 
+                        writer=test_writer)
+
+        for epoch in range(0, epochs):
+            self.data_manager.set_train()
+            train_epoch_data = self.train.step(epoch)
+            self.data_manager.set_eval()
+            test_epoch_data = self.test.step(epoch)
+            # Reduce LR on Plateaue
+            # scheduler.step(test_epoch_data['test_loss'])
 
     def run(self, 
             epochs=40, 
