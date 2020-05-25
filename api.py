@@ -79,7 +79,7 @@ class Experiment(object):
         self.test = None
 
     
-    def run(self, epochs=5):
+    def run_final(self, epochs):
         if hasattr(tqdm, '_instances'):
             tqdm._instances.clear()
         
