@@ -88,7 +88,6 @@ class TrainExtended(Train):
     
     def step(self, epoch):
         self.model.train()
-        self.dataset.set_train()
         train_loss = 0
         pbar = tqdm(self.train_loader)
         train_len = len(self.train_loader.dataset)

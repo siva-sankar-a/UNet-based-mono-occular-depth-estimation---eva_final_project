@@ -59,7 +59,6 @@ class TestExtended(Test):
     
     def step(self, epoch):
         self.model.eval()
-        self.dataset.set_eval()
         pbar = tqdm(self.test_loader)
         test_len = len(self.test_loader.dataset)
         n_test_batches = test_len / self.test_loader.batch_size
