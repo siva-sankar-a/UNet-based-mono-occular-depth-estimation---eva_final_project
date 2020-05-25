@@ -79,12 +79,12 @@ class TestExtended(Test):
             fg_bg_stacked = torch.cat([fg_bg_images, bg_images], axis=1)
 
             # Move data to cpu/gpu based on input
-            fg_bg_stacked = fg_bg_stacked.to(device)
+            fg_bg_stacked = fg_bg_stacked.to(self.device)
 
-            target_mask = torch.squeeze(mask_minimal_images, 1).to(device)
+            target_mask = torch.squeeze(mask_minimal_images, 1).to(self.device)
             target_mask = (target_mask > 0.5).float()
             
-            target_depth_map = depth_minimal_images.to(device)
+            target_depth_map = depth_minimal_images.to(self.device)
 
             # Forward pass
             output_mask, output_depth_map = model(fg_bg_stacked)
