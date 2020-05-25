@@ -135,14 +135,37 @@ Two accuracies are computed for evaluating the model:
 
 ## Results
 
-The last 
+Logs for the last 5 epochs are given below
 
+```
+TRAIN : epoch=0 dsssim: 0.146604 mask_acc: 99.60 depth_acc: 85.28 loss: 14.84216 cm_loss=0.01043 d_loss=14.73783: 100%|██████████| 7500/7500 [33:19<00:00,  3.75it/s]
+TEST : epoch=0 dssim: 0.27266 mask_acc: 97.43 depth_acc: 74.05 loss: 26.95518 cm_loss=0.09672 d_loss=25.98796: 100%|██████████| 2500/2500 [08:40<00:00,  4.80it/s]
+TRAIN : epoch=1 dsssim: 0.104214 mask_acc: 99.64 depth_acc: 85.97 loss: 14.14543 cm_loss=0.00921 d_loss=14.05333: 100%|██████████| 7500/7500 [33:23<00:00,  3.74it/s]
+TEST : epoch=1 dssim: 0.29243 mask_acc: 98.50 depth_acc: 73.45 loss: 27.12203 cm_loss=0.05271 d_loss=26.59495: 100%|██████████| 2500/2500 [08:32<00:00,  4.88it/s]
+TRAIN : epoch=2 dsssim: 0.123924 mask_acc: 99.65 depth_acc: 86.44 loss: 13.67147 cm_loss=0.00883 d_loss=13.58317: 100%|██████████| 7500/7500 [33:04<00:00,  3.78it/s]
+TEST : epoch=2 dssim: 0.28305 mask_acc: 97.96 depth_acc: 74.28 loss: 26.56863 cm_loss=0.08064 d_loss=25.76226: 100%|██████████| 2500/2500 [08:31<00:00,  4.89it/s]
+TRAIN : epoch=3 dsssim: 0.101772 mask_acc: 99.66 depth_acc: 86.82 loss: 13.28391 cm_loss=0.00856 d_loss=13.19827: 100%|██████████| 7500/7500 [33:21<00:00,  3.75it/s]
+TEST : epoch=3 dssim: 0.26931 mask_acc: 98.56 depth_acc: 74.20 loss: 26.35340 cm_loss=0.05068 d_loss=25.84659: 100%|██████████| 2500/2500 [08:44<00:00,  4.77it/s]
+TRAIN : epoch=4 dsssim: 0.137901 mask_acc: 99.67 depth_acc: 87.14 loss: 12.96516 cm_loss=0.00832 d_loss=12.88197: 100%|██████████| 7500/7500 [33:18<00:00,  3.75it/s]
+TEST : epoch=4 dssim: 0.25268 mask_acc: 98.89 depth_acc: 74.97 loss: 25.44591 cm_loss=0.03705 d_loss=25.07544: 100%|██████████| 2500/2500 [08:32<00:00,  4.88it/s]
+```
+
+## Final accuracies
+| Accuracy | Value |
+| -- | -- | 
+| Mask accuracy | **98.89%** |
+| Depth map accuracy | **74.97%** |
+
+## Image results
+
+#### Input foreground-background image
 ![Result1](img/result_1.png)
-![Result2](img/result_2.png)
-![Result3](img/result_3.png)
-![Result4](img/result_4.png)
 
-## Lessons learnt
-- Depth mapping not effective due to excessive shadows and occlusions in background
-- Reconsidering background image setup
-- Depth mapping prediction gives unsatisfactory results for small image of size 224, 224 
+#### Input background image
+![Result2](img/result_2.png)
+
+#### Output predicted mask image
+![Result3](img/result_3.png)
+
+#### Output predicted depth map
+![Result4](img/result_4.png)
