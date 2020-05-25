@@ -111,7 +111,7 @@ class TrainExtended(Train):
             # Move data to cpu/gpu based on input
             fg_bg_stacked = fg_bg_stacked.to(self.device)
 
-            optimizer.zero_grad()
+            self.optimizer.zero_grad()
 
             target_mask = torch.squeeze(mask_minimal_images, 1).to(self.device)
             target_mask = (target_mask > 0.5).float()
@@ -144,23 +144,23 @@ class TrainExtended(Train):
             batch_loss.backward()
             
             # Gradient descent
-            optimizer.step()
+            self.optimizer.step()
             
             acc1 += (torch.round(torch.sigmoid(output_mask)).eq(target_mask).float().mean() / n_train_batches).item()
             acc2 += ((1 - dssim_loss) / n_train_batches).item()
 
 
             # Step scheduler if scheduler is present
-            if scheduler:
-                scheduler.step()
+            if self.scheduler:
+                self.scheduler.step()
             
             # Logging - updating progress bar and summary writer
             pbar.set_description(desc= f'TRAIN : epoch={epoch} dsssim: {dssim_loss:5f} ' +
                                     f'mask_acc: {100 * acc1:.2f} depth_acc: {100 * acc2:.2f} ' +
                                     f'loss: {train_loss:.5f} cm_loss={cm_loss:.5f} d_loss={d_loss:.5f}')
 
-            writer.add_scalar('train/batch_loss', batch_loss, epoch * train_len + batch_idx)
+            self.writer.add_scalar('train/batch_loss', batch_loss, epoch * train_len + batch_idx)
             break
-        writer.add_scalar('loss', train_loss, epoch)
+        self.writer.add_scalar('loss', train_loss, epoch)
 
         return train_loss, np.mean([acc1, acc2])

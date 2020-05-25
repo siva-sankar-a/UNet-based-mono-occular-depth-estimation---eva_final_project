@@ -114,7 +114,7 @@ class TestExtended(Test):
                                     f'mask_acc: {100 * acc1:.2f} depth_acc: {100 * acc2:.2f} ' +
                                     f'loss: {test_loss:.5f} cm_loss={cm_loss:.5f} d_loss={d_loss:.5f}')
 
-            writer.add_scalar('test/batch_loss', batch_loss, epoch * test_len + batch_idx)
+            self.writer.add_scalar('test/batch_loss', batch_loss, epoch * test_len + batch_idx)
             break
-        writer.add_scalar('loss', test_loss, epoch)
+        self.writer.add_scalar('loss', test_loss, epoch)
         return test_loss, np.mean([acc1, acc2])
